@@ -13,3 +13,4 @@ I consider a puzzle solved when I've actually solved both parts of it. Atm I've 
 - Day 1 - The Tyranny of the Rocket Equation (need to push the solution here)
 - Day 2 - 1202 Program Alarm
 - Day 3 - Crossed Wires
+- Day 4 - Secure Container
