@@ -25,6 +25,7 @@ std::vector<std::string> interpret_code(std::vector<std::string> tokens) {
         for (int i = 0; i < tokens.size(); ++i) {
             int token = std::stoi(tokens[i]);
             switch (token) {
+                // Sorry for code duplication here!
                 case 1: {
                     int arg1 = std::stoi(tokens[i + 1]);
                     int arg2 = std::stoi(tokens[i + 2]);

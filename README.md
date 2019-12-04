@@ -10,7 +10,7 @@ You can find the puzzles here: https://adventofcode.com/2019
 
 I consider a puzzle solved when I've actually solved both parts of it. Atm I've solved:
 
-- Day 1 - The Tyranny of the Rocket Equation (need to push the solution here)
+- Day 1 - The Tyranny of the Rocket Equation
 - Day 2 - 1202 Program Alarm
 - Day 3 - Crossed Wires
 - Day 4 - Secure Container
