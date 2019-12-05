@@ -158,13 +158,13 @@ std::unordered_map<std::string, int> find_intersections(const std::vector<std::s
 
 int find_best_intersections(const std::unordered_map<std::string, int>& first, const std::unordered_map<std::string, int>& second) {
     int best_sum = -1;
-    std::for_each(first.begin(), first.end(), [&](const std::pair<std::string, int>& p1) -> void {
-        std::for_each(second.begin(), second.end(), [&](const std::pair<std::string, int>& p2) -> void {
-            if (p1.first != p2.first) return;
+    for (auto p1 : first) {
+        for (auto p2 : second) {
+            if (p1.first != p2.first) continue;
             int sum = p1.second + p2.second;
             best_sum = best_sum == -1 ? sum : (sum < best_sum ? sum : best_sum);
-        });
-    });
+        }
+    }
     return best_sum;
 }
 
