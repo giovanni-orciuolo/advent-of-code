@@ -47,6 +47,7 @@
         "ratio": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "set": "cpp"
     }
 }
