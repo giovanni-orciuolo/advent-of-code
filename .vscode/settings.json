@@ -41,6 +41,12 @@
         "typeinfo": "cpp",
         "map": "cpp",
         "functional": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "chrono": "cpp",
+        "ctime": "cpp",
+        "ratio": "cpp",
+        "thread": "cpp",
+        "cinttypes": "cpp",
+        "list": "cpp"
     }
 }
