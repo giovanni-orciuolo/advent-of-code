@@ -1,1 +1,1 @@
-g++ --std=c++11 -o amplification_circuit amplification_circuit.cpp
+g++ --std=c++11 -o space_image_format space_image_format.cpp
