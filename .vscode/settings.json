@@ -48,6 +48,7 @@
         "thread": "cpp",
         "cinttypes": "cpp",
         "list": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }

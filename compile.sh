@@ -1,1 +1,1 @@
-g++ --std=c++11 -o orbit_checksum orbit_checksum.cpp
+g++ --std=c++11 -o amplification_circuit amplification_circuit.cpp
