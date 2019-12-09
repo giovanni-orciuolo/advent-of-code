@@ -31,6 +31,27 @@ std::string join(const std::array<std::string, 5>& v, const std::string& delimit
 
 // Actual code
 
+struct ProgramState {
+    std::string code;
+    int ip;
+    bool got_settings;
+    bool reached_end;
+
+    ProgramState()
+        : code(""), ip(0), got_settings(false), reached_end(false) {}
+    ProgramState(const std::string& code)
+        : code(code), ip(0), got_settings(false), reached_end(false) {}
+    ProgramState(const std::string& code, int ip, bool got_settings, bool reached_end)
+        : code(code), ip(ip), got_settings(got_settings), reached_end(reached_end) {}
+
+    void reset(const std::string& program) {
+        code = program;
+        ip = 0;
+        got_settings = false;
+        reached_end = false;
+    }
+};
+
 // I know macros are EVIL INCARNATE, but I need them!! :(
 #define OP_ARG_STR(index) ((modes.length() > index) && modes[index] == '1') ? params[index] : tokens.at(std::stoi(params[index]))
 #define OP_ARG(index) std::stoi(OP_ARG_STR(index))
@@ -43,16 +64,15 @@ std::string run_program(
     std::string& code, // Remove the & to avoid modifying the original program
     const std::string& phase_settings,
     const std::string& input,
-    bool& reached_end
+    ProgramState* state
 ) {
     // Instruction pointer
-    int ip = 0;
+    int ip = state->ip;
 
     // Get tokens by splitting the source code
     std::vector<std::string> tokens = split(code, ',');
 
     int output = 0;
-    bool got_phase_settings = false, got_input = false, wants_other_input = false;
 
     if (DEBUG) std::cout << "=== RUNNING PROGRAM ===" << std::endl;
 
@@ -76,22 +96,14 @@ std::string run_program(
             tokens[outp] = std::to_string(arg1 * arg2);
             ip += 4;
         }},
-        {"INP", [&tokens, &ip, phase_settings, input, &got_input, &got_phase_settings, &wants_other_input](const std::string& modes, const std::vector<std::string>& params) -> void {
-            if (got_input && got_phase_settings) {
-                wants_other_input = true;
-                return;
-            }
-
+        {"INP", [&tokens, &ip, phase_settings, input, &state](const std::string& modes, const std::vector<std::string>& params) -> void {
             int outp = std::stoi(params[0]);
 
             if (DEBUG) std::cout << ">>>> INP | Output position = " << outp << std::endl;
-            tokens[outp] = got_phase_settings ? input : phase_settings;
+            tokens[outp] = state->got_settings ? input : phase_settings;
 
-            if (!got_input && got_phase_settings) {
-                got_input = true;
-            }
-            if (!got_phase_settings) {
-                got_phase_settings = true;
+            if (!state->got_settings) {
+                state->got_settings = true;
             }
 
             ip += 2;
@@ -137,6 +149,13 @@ std::string run_program(
         }},
     };
 
+    const auto end_program = [&](bool end) -> std::string {
+        code = join(tokens, ",");
+        state->ip = ip;
+        state->reached_end = end;
+        return std::to_string(output);
+    };
+
     try {
         for (; ip < tokens.size();) {
             // Parse instruction
@@ -147,6 +166,7 @@ std::string run_program(
 
             int token = std::stoi(opcode.length() == 2 ? opcode.substr(1) : opcode);
             if (DEBUG) std::cout << ">>>> OPCODE: " << opcode << " | PARAM MODES: " << parameter_modes << " | IP: " << ip << std::endl;
+
             switch (token) {
                 case 1: opcodes["ADD"](parameter_modes, { tokens[ip + 1], tokens[ip + 2], tokens[ip + 3] }); break;
                 case 2: opcodes["MUL"](parameter_modes, { tokens[ip + 1], tokens[ip + 2], tokens[ip + 3] }); break;
@@ -156,26 +176,19 @@ std::string run_program(
                 case 6: opcodes["JIF"](parameter_modes, { tokens[ip + 1], tokens[ip + 2] });                 break;
                 case 7: opcodes["SLT"](parameter_modes, { tokens[ip + 1], tokens[ip + 2], tokens[ip + 3] }); break;
                 case 8: opcodes["SIE"](parameter_modes, { tokens[ip + 1], tokens[ip + 2], tokens[ip + 3] }); break;
-                case 9:
-                    code = join(tokens, ",");
-                    reached_end = true;
-                    return std::to_string(output);
+                case 9: return end_program(true);
+            }
+            
+            if (token == 3 && state->got_settings && ip != state->ip) {
+                // Pause this! Wait for an input
+                return end_program(false);
             }
 
             if (SHOW_STATES) std::cout << std::endl << join(tokens, ",") << std::endl << std::endl;
-
-            if (wants_other_input) {
-                // Pause this! Wait for an input
-                code = join(tokens, ",");
-                reached_end = false;
-                return std::to_string(output);
-            }
         }
 
         std::cout << "Didn't find a 99 opcode. Returning from input end..." << std::endl;
-        code = join(tokens, ",");
-        reached_end = true;
-        return std::to_string(output);
+        return end_program(true);
     } catch (const std::exception& e) {
         std::cerr << "ERROR! Failed to parse code: " << e.what() << std::endl;
         return {};
@@ -183,24 +196,29 @@ std::string run_program(
 }
 
 int main() {
-    const std::string program = "3,8,1001,8,10,8,105,1,0,0,21,38,47,64,85,106,187,268,349,430,99999,3,9,1002,9,4,9,1001,9,4,9,1002,9,4,9,4,9,99,3,9,1002,9,4,9,4,9,99,3,9,1001,9,3,9,102,5,9,9,1001,9,5,9,4,9,99,3,9,101,3,9,9,102,5,9,9,1001,9,4,9,102,4,9,9,4,9,99,3,9,1002,9,3,9,101,2,9,9,102,4,9,9,101,2,9,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,99,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,99";
+    const std::string program = "3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5";
 
     int max_output = 0;
 
     // { "0", "1", "2", "3", "4" } if you don't want feedback loop mode
     std::array<std::string, 5> phase_settings { "5", "6", "7", "8", "9" }, best_phase_settings{};
-    std::array<std::string, 5> program_states { program, program, program, program, program };
+    std::array<ProgramState*, 5> program_states {
+        new ProgramState(program),
+        new ProgramState(program),
+        new ProgramState(program),
+        new ProgramState(program),
+        new ProgramState(program)
+    };
 
     do {
         std::string current_input = "0";
         
         while (true) {
-            bool reached_end = false;
             for (int i = 0; i < phase_settings.size(); ++i) {
                 std::string phase = phase_settings[i];
-                current_input = run_program(program_states[i], phase, current_input, reached_end);
+                current_input = run_program(program_states[i]->code, phase, current_input, program_states[i]);
             }
-            if (reached_end) break;
+            if (program_states[4]->reached_end) break;
         }
 
         int final_output = std::stoi(current_input);
@@ -209,10 +227,12 @@ int main() {
             best_phase_settings = phase_settings;
         }
 
-        program_states = { program, program, program, program, program };
+        for (auto* s : program_states) s->reset(program);
     } while (std::next_permutation(phase_settings.begin(), phase_settings.end()));
 
     std::cout << "Max output: " << max_output << ", with phase settings: " << join(best_phase_settings, ",") << std::endl;
+
+    for (auto* s : program_states) delete s;
 
     return 0;
 }
