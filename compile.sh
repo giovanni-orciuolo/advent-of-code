@@ -1,1 +1,1 @@
-g++ --std=c++11 -o space_image_format space_image_format.cpp
+g++ --std=c++11 -o monitoring_station monitoring_station.cpp
