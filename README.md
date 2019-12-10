@@ -18,3 +18,4 @@ I consider a puzzle solved when I've actually solved both parts of it. Atm I've 
 - Day 6 - Universal Orbit Map
 - Day 7 - Amplification Circuit (only Part 1)
 - Day 8 - Space Image Format
+- Day 10 - Monitoring Station
