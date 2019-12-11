@@ -1,1 +1,1 @@
-g++ --std=c++11 -o monitoring_station monitoring_station.cpp
+g++ --std=c++11 -o sensor_boost sensor_boost.cpp
