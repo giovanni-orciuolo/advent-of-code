@@ -1,1 +1,1 @@
-g++ --std=c++11 -o space_police space_police.cpp
+g++ --std=c++11 -o care_package care_package.cpp
