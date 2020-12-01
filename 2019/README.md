@@ -19,3 +19,6 @@ I consider a puzzle solved when I've actually solved both parts of it. Atm I've 
 - Day 7 - Amplification Circuit (only Part 1)
 - Day 8 - Space Image Format
 - Day 10 - Monitoring Station
+- Day 11 - Space Police
+- Day 12 - The N-Body Problem
+- Day 13 - Care Package (only Part 1)

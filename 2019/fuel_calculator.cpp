@@ -17,7 +17,7 @@ int main() {
     std::ifstream file("module_masses.txt");
     int fuels_sum = 0, fuels_sum_re = 0;
 
-    for (std::string module_mass; getline(file, module_mass);) {
+    for (std::string module_mass; std::getline(file, module_mass);) {
         int mass = std::stoi(module_mass);
         int fuel = calculate_fuel(mass);
         fuels_sum += fuel;
