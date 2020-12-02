@@ -4,17 +4,19 @@
 #include <string>
 
 int main() {
+    // Read input
+    
     std::ifstream file("expense_report.txt");
     std::vector<int> values{};
     
-    for (std::string value; getline(file, value);) {
+    for (std::string value; std::getline(file, value);) {
         values.push_back(stoi(value));
     }
 
     file.close();
     bool found = false;
 
-    // First part
+    // Part one
 
     for (int v : values) {
         for (int vv : values) {
@@ -27,7 +29,8 @@ int main() {
         if (found) break;
     }
 
-    // Second part
+    // Part two
+
     found = false;
 
     for (int v : values) {

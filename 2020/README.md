@@ -11,3 +11,4 @@ You can find the puzzles here: https://adventofcode.com/2020
 I consider a puzzle solved when I've actually solved both parts of it. Atm I've solved:
 
 - Day 1 - Report Repair
+- Day 2 - Password Philosophy
