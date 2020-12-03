@@ -50,7 +50,7 @@ int main() {
     std::cout << "R7D1: " << r7d1 << std::endl;
     std::cout << "R1D2: " << r1d2 << std::endl;
 
-    // Multiplication must be done on long because the number is too high
+    // Multiplication must be done on uint because the number is too high
     unsigned int result = r1d1 * r3d1 * r5d1 * r7d1 * r1d2;
 
     std::cout << "Part one solution: " << r3d1 << std::endl;
