@@ -38,11 +38,11 @@ int main() {
     }
 
     // Count trees with the given rules
-    int r1d1 = count_trees_for_slope(tree_lines, 1, 1);
-    int r3d1 = count_trees_for_slope(tree_lines, 3, 1); // This output is the solution for part 1
-    int r5d1 = count_trees_for_slope(tree_lines, 5, 1);
-    int r7d1 = count_trees_for_slope(tree_lines, 7, 1);
-    int r1d2 = count_trees_for_slope(tree_lines, 1, 2);
+    long r1d1 = count_trees_for_slope(tree_lines, 1, 1);
+    long r3d1 = count_trees_for_slope(tree_lines, 3, 1); // This output is the solution for part 1
+    long r5d1 = count_trees_for_slope(tree_lines, 5, 1);
+    long r7d1 = count_trees_for_slope(tree_lines, 7, 1);
+    long r1d2 = count_trees_for_slope(tree_lines, 1, 2);
 
     std::cout << "R1D1: " << r1d1 << std::endl;
     std::cout << "R3D1: " << r3d1 << std::endl;
