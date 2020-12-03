@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 int count_trees_for_slope(const std::vector<std::string>& tree_lines, int right, int down) {
     int x = 0, y = 0, tree_count = 0, line_length = tree_lines[0].length();
