@@ -38,11 +38,11 @@ int main() {
     }
 
     // Count trees with the given rules
-    long r1d1 = count_trees_for_slope(tree_lines, 1, 1);
-    long r3d1 = count_trees_for_slope(tree_lines, 3, 1); // This output is the solution for part 1
-    long r5d1 = count_trees_for_slope(tree_lines, 5, 1);
-    long r7d1 = count_trees_for_slope(tree_lines, 7, 1);
-    long r1d2 = count_trees_for_slope(tree_lines, 1, 2);
+    unsigned int r1d1 = count_trees_for_slope(tree_lines, 1, 1);
+    unsigned int r3d1 = count_trees_for_slope(tree_lines, 3, 1); // This output is the solution for part 1
+    unsigned int r5d1 = count_trees_for_slope(tree_lines, 5, 1);
+    unsigned int r7d1 = count_trees_for_slope(tree_lines, 7, 1);
+    unsigned int r1d2 = count_trees_for_slope(tree_lines, 1, 2);
 
     std::cout << "R1D1: " << r1d1 << std::endl;
     std::cout << "R3D1: " << r3d1 << std::endl;
@@ -51,7 +51,7 @@ int main() {
     std::cout << "R1D2: " << r1d2 << std::endl;
 
     // Multiplication must be done on long because the number is too high
-    long result = r1d1 * r3d1 * r5d1 * r7d1 * r1d2;
+    unsigned int result = r1d1 * r3d1 * r5d1 * r7d1 * r1d2;
 
     std::cout << "Part one solution: " << r3d1 << std::endl;
     std::cout << "Part two solution: " << result << std::endl;
