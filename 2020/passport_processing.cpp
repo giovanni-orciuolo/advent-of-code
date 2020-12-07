@@ -101,8 +101,7 @@ int main() {
 
         std::smatch match;
         std::string::const_iterator search(passport.cbegin());
-        while (regex_search(search, passport.cend(), match, regex))
-        {
+        while (regex_search(search, passport.cend(), match, regex)) {
             const std::string& key = match[1].str(), value = match[2].str();
             // std::cout << (search == passport.cbegin() ? "" : " ") << key;
             // cid is not required

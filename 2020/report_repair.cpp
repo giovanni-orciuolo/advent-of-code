@@ -17,7 +17,6 @@ int main() {
     bool found = false;
 
     // Part one
-
     for (int v : values) {
         for (int vv : values) {
             if (v + vv == 2020) {

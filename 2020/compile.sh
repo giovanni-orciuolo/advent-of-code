@@ -1,1 +1,1 @@
-g++ --std=c++11 -o passport_processing passport_processing.cpp
+g++ --std=c++11 -o binary_boarding binary_boarding.cpp
