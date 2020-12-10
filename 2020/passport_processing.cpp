@@ -8,7 +8,7 @@
 
 int main() {
     // Read input
-    std::ifstream file("passports.txt");
+    std::ifstream file("inputs/passports.txt");
     std::vector<std::string> passports{};
     std::string passport{};
     

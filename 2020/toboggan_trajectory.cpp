@@ -29,8 +29,7 @@ int count_trees_for_slope(const std::vector<std::string>& tree_lines, int right,
 
 int main() {
     // Read input
-
-    std::ifstream file("trees.txt");
+    std::ifstream file("inputs/trees.txt");
     std::vector<std::string> tree_lines{};
     
     for (std::string v; std::getline(file, v);) {

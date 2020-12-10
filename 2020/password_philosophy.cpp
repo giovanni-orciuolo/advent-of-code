@@ -5,8 +5,7 @@
 
 int main() {
     // Read input
-
-    std::ifstream file("passwords.txt");
+    std::ifstream file("inputs/passwords.txt");
     std::vector<std::string> patterns{};
     
     for (std::string p; std::getline(file, p);) {
@@ -16,7 +15,6 @@ int main() {
     file.close();
 
     // Part one
-
     std::regex regex("([0-9]*)-([0-9]*) ([a-z]|[A-Z]|[0-9]): (.*)");
     std::smatch matches;
     int num_valids = 0;
@@ -43,7 +41,6 @@ int main() {
     std::cout << "[Part one] Number of valid passwords: " << num_valids << std::endl;
 
     // Part two
-
     num_valids = 0;
     
     for (const std::string& p : patterns) {

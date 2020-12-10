@@ -36,7 +36,7 @@ Seat decode_seat(const std::string& seat) {
 
 int main() {
     // Read input
-    std::ifstream file("seats.txt");
+    std::ifstream file("inputs/seats.txt");
     std::vector<std::string> seats{};
     
     for (std::string line; std::getline(file, line);) {
@@ -46,7 +46,6 @@ int main() {
     file.close();
 
     // Part one
-
     int max_seat_id = -1;
     std::vector<Seat> decoded_seats{}; // Useful for part 2
 
@@ -61,7 +60,6 @@ int main() {
     std::cout << "Max seat id: " << max_seat_id << std::endl;
 
     // Part two
-
     std::sort(decoded_seats.begin(), decoded_seats.end(), [](const Seat& a, const Seat& b) { return a.id < b.id; });
     int last_id = 0;
     for (const Seat& seat : decoded_seats) {

@@ -5,8 +5,7 @@
 
 int main() {
     // Read input
-    
-    std::ifstream file("expense_report.txt");
+    std::ifstream file("inputs/expense_report.txt");
     std::vector<int> values{};
     
     for (std::string value; std::getline(file, value);) {
@@ -29,7 +28,6 @@ int main() {
     }
 
     // Part two
-
     found = false;
 
     for (int v : values) {

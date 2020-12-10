@@ -58,7 +58,7 @@ int count_bags_recursive(
 
 int main() {
     // Read input
-    std::ifstream file("sacks_rules.txt");
+    std::ifstream file("inputs/sacks_rules.txt");
     std::vector<std::string> rules{};
     
     for (std::string rule; std::getline(file, rule);) {

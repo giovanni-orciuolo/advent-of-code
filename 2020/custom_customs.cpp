@@ -17,7 +17,7 @@ std::vector<std::string> split(const std::string& s, char delimiter)
 
 int main() {
     // Read input
-    std::ifstream file("customs.txt");
+    std::ifstream file("inputs/customs.txt");
     std::vector<std::string> answers{};
     std::string group{};
     
@@ -38,7 +38,6 @@ int main() {
     answers.push_back(group);
 
     // Part one
-
     int sum = 0;
 
     for (std::string a : answers) {
@@ -54,11 +53,9 @@ int main() {
     std::cout << "Sum of answers count: " << sum << std::endl;
 
     // Part two
-
-    // Listen, we are not code golfing here ok!?
     const std::vector<char> questions{
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-    };
+    }; // Listen, we are not code golfing here ok!?
     sum = 0;
 
     for (const std::string& a : answers) {
