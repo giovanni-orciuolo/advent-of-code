@@ -17,3 +17,4 @@ I consider a puzzle solved when I've actually solved both parts of it. Atm I've 
 - Day 5 - Binary Boarding
 - Day 6 - Custom Customs
 - Day 7 - Handy Haversacks
+- Day 9 - Encoding Error
