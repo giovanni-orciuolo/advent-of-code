@@ -19,3 +19,4 @@ I consider a puzzle solved when I've actually solved both parts of it. Atm I've 
 - Day 7 - Handy Haversacks
 - Day 8 - Handheld Halting
 - Day 9 - Encoding Error
+- Day 10 - Adapter Array
