@@ -1,11 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 #include <unordered_map>
 #include <functional>
 #include <sstream>
 #include <algorithm>
+#include <regex>
+
+bool starts_with(const std::string& s, const std::string& prefix) {
+    return s.rfind(prefix, 0) == 0;
+}
 
 std::vector<std::string> split(const std::string& s, char delimiter)
 {
@@ -75,39 +79,55 @@ int main() {
 
     // Part two
     accumulator = 0;
+    bool found_replacement = false;
 
     // Bruteforce first by changing one by one JMPs to NOPs and then NOPs to JMPs
     for (int i = 0; i < instructions.size(); ++i) {
+        accumulator = 0;
         bool mod = false;
-        if (instructions[i] == "jmp") {
-            instructions[i] = "nop";
+        if (starts_with(instructions[i], "jmp")) {
+            instructions[i] = std::regex_replace(instructions[i], std::regex("jmp"), "nop");
             mod = true;
         }
-        if (run_code(instructions, accumulator)) {
-            std::cout << "The bootloader exited without looping! The current value of the accumulator is: " << accumulator << std::endl;
+        if (mod && run_code(instructions, accumulator)) {
+            found_replacement = true;
             break;
         }
         if (mod) {
-            instructions[i] = "jmp";
+            instructions[i] = std::regex_replace(instructions[i], std::regex("nop"), "jmp");
         }
+    }
+
+    if (found_replacement) {
+        std::cout << "The bootloader exited without looping! The current value of the accumulator is: " << accumulator << std::endl;
+        return 0;
     }
 
     std::cout << "No fix found by replacing JMPs with NOPs. Trying to replace NOPs with JMPs..." << std::endl;
 
     for (int i = 0; i < instructions.size(); ++i) {
+        accumulator = 0;
         bool mod = false;
-        if (instructions[i] == "nop") {
-            instructions[i] = "jmp";
+        if (starts_with(instructions[i], "nop")) {
+            instructions[i] = std::regex_replace(instructions[i], std::regex("nop"), "jmp");
             mod = true;
         }
-        if (run_code(instructions, accumulator)) {
-            std::cout << "The bootloader exited without looping! The current value of the accumulator is: " << accumulator << std::endl;
+        if (mod && run_code(instructions, accumulator)) {
+            found_replacement = true;
             break;
         }
         if (mod) {
-            instructions[i] = "nop";
+            instructions[i] = std::regex_replace(instructions[i], std::regex("jmp"), "nop");
         }
     }
+
+    if (found_replacement) {
+        std::cout << "The bootloader exited without looping! The current value of the accumulator is: " << accumulator << std::endl;
+        return 0;
+    }
+
+    std::cout << "No fix found by replacing NOPs with JMPs. Wtf..." << std::endl;
+    // Wtf bro??? I can't find a code that never repeats a single instruction!!! Bruh
 
     return 0;
 }
