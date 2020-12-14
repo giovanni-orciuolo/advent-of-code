@@ -1,1 +1,1 @@
-g++ --std=c++11 -o adapter_array adapter_array.cpp
+g++ --std=c++17 -o seating_system seating_system.cpp

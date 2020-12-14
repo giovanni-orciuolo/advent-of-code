@@ -1,6 +1,6 @@
 ## Advent of Code 2020
 
-These are my personal solutions for the current Advent of Code 2020. They are all written in C++11, can be compiled and run through g++
+These are my personal solutions for the current Advent of Code 2020. They are all written in C++17, can be compiled and run through g++
 
 My solutions aren't perfect by any means: I just want to make them work, while also maintaining a sane level of "elegance" to my code.
 
