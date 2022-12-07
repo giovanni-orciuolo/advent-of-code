@@ -58,7 +58,7 @@ int main() {
 
     for (auto it = numbers.begin(); it < numbers.end(); ++it) {
         int sum = 0;
-        for (auto kt = it + 1; kt < numbers.end(); ++kt) {
+        for (auto kt = it; kt < numbers.end(); ++kt) {
             sum += *kt;
             if (sum == invalid) {
                 found_sum_to_invalid = true;
