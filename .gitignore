@@ -1,2 +1,5 @@
 .vscode/
 out/
+*.hi
+*.o
+*.exe
